@@ -2,21 +2,21 @@
 class ShiftCipher{
     constructor(shift){
       this._shift = shift;
+      this._aIndex = 'a'.charCodeAt();
+      this._zIndex = 'z'.charCodeAt();
     }
   
     encrypt(string){
       string =  string.toLowerCase();
       const encodedString = [];
-      const aIndex = 'a'.charCodeAt();
-      const zIndex = 'z'.charCodeAt();
 
       for(const char of string){
-        if(char.charCodeAt() >= aIndex && char.charCodeAt() <=zIndex){
+        if(char.charCodeAt() >= this._aIndex && char.charCodeAt() <=this._aIndex){
             let newCharCode = char.charCodeAt()+this._shift
             if(newCharCode>zIndex){
                 newCharCode = newCharCode-zIndex === 1 
-                            ? aIndex 
-                            : aIndex + (newCharCode-zIndex-1);
+                            ? this._aIndex 
+                            : this._aIndex + (newCharCode-this._zIndex-1);
             }
             encodedString.push(String.fromCharCode(newCharCode))
         }else{
@@ -30,16 +30,14 @@ class ShiftCipher{
     decrypt(string){
         string =  string.toLowerCase();
       const encodedString = [];
-      const aIndex = 'a'.charCodeAt();
-      const zIndex = 'z'.charCodeAt();
 
       for(const char of string){
-        if(char.charCodeAt() >= aIndex && char.charCodeAt() <=zIndex){
+        if(char.charCodeAt() >= this._aIndex && char.charCodeAt() <=this._zIndex){
             let newCharCode = char.charCodeAt()-this._shift
-            if(newCharCode<aIndex){
-                newCharCode = aIndex - newCharCode === 1 
-                            ? zIndex 
-                            : zIndex - (aIndex - newCharCode - 1);
+            if(newCharCode<this._aIndex){
+                newCharCode = this._aIndex - newCharCode === 1 
+                            ? this._zIndex 
+                            : this._zIndex - (this._aIndex - newCharCode - 1);
             }
             encodedString.push(String.fromCharCode(newCharCode))
         }else{
